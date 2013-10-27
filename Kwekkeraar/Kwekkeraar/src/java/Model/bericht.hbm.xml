@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="Model">
+  <class catalog="kwekkeraar" name="Bericht" table="bericht">
+    <id name ="id" type="java.lang.Integer">
+        <column name="id"/>
+        <generator class="increment"/>
+    </id>
+    
+    <property name="inhoud" type="string">
+        <column length="255" name="inhoud" not-null="false"/>
+    </property>
+    
+    <many-to-one name="poster" column="poster" class="Gebruiker"></many-to-one>
+
+
+    </class>
+</hibernate-mapping>
