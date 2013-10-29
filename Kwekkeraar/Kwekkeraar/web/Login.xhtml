@@ -7,32 +7,41 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Log in</title>
+        <h:outputStylesheet name="common-style.css"/>
     </h:head>
     <h:body>
-        <h:outputStylesheet name="default.css" />
-        <h:form>
-            <p:panel id="panel" header="Log in" style="margin-bottom:10px;">  
-                <p:messages id="messages" />  
-                <h:panelGrid columns="2">  
+        <ui:composition template="/resources/commonLayout.xhtml">
 
-                    <p:outputLabel for="naam" value="Naam : " />  
-                    <p:inputText id="naam" value="#{loginBean.gebruiker.naam}" 
-                                 required="true" validatorMessage="Naam mag niet leeg zijn!"/>
-                    
-                    <p:outputLabel for="wachtwoord" value="Wachtwoord : " />
-                    <h:inputSecret id="wachtwoord" value="#{loginBean.gebruiker.wachtwoord}"
-                                 required="true" validatorMessage="Wachtwoord mag niet leeg zijn!" />
-                    
-                </h:panelGrid>  
-            </p:panel>  
+            <ui:define name="header"/> 
 
-            <p:commandButton value="Log in" update="panel" action="#{loginBean.login}"/>
-        </h:form>
-        <h:form>
-            <p:commandButton value="Nog geen lid? Registreer!" update=""  action="#{navigationBean.toRegister}" />
-        </h:form>
+            <ui:define name="content">
+                <h:form>
+                    <p:panel id="panel" header="Log in" style="margin-bottom:10px;">  
+                        <p:messages id="messages" />  
+                        <h:panelGrid columns="2">  
+
+                            <p:outputLabel for="naam" value="Naam : " />  
+                            <p:inputText id="naam" value="#{loginBean.gebruiker.naam}" 
+                                         required="true" />
+
+                            <p:outputLabel for="wachtwoord" value="Wachtwoord : " />
+                            <h:inputSecret id="wachtwoord" value="#{loginBean.gebruiker.wachtwoord}"
+                                           required="true" />
+
+                        </h:panelGrid>  
+                    </p:panel>  
+
+                    <p:commandButton value="Log in" update="panel" action="#{loginBean.login}"/>
+                </h:form>
+                <h:form>
+                    <p:commandButton value="Nog geen lid? Registreer!" update=""  action="#{navigationBean.toRegister}" />
+                </h:form>
+            </ui:define>       
+        </ui:composition>
+
     </h:body>
 </html>

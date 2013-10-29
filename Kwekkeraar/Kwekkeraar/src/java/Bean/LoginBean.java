@@ -7,6 +7,9 @@ package Bean;
 
 import Controller.Controller;
 import Model.Gebruiker;
+import java.util.Iterator;
+import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -36,6 +39,13 @@ public class LoginBean {
         this.gebruiker = gebruiker;
     }
 
+    @PostConstruct
+    public void getLoggedInUser() {
+        if (gebruiker.getNaam() == null || gebruiker.getNaam().isEmpty()) {
+            gebruiker = Controller.Instance().getLoggedIn();
+        }
+    }
+
     public String login() {
 
         String salt = controller.getSaltFromDB(gebruiker.getNaam());
@@ -48,7 +58,10 @@ public class LoginBean {
                 gebruiker = Controller.Instance().getLoggedIn();
                 return "favorieten.xhtml?faces-redirect=true";
             } else {
-                return "Login.xhtml?faces-redirect=true";
+                FacesMessage msg = new FacesMessage("Login fout! Uw naam of wachtwoord is incorrect.");
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return "Login.xhtml";
             }
         } else {
             FacesMessage msg = new FacesMessage("Login fout!");
@@ -61,7 +74,14 @@ public class LoginBean {
     public String logout() {
         Controller.Instance().Logout();
         loggedIn = false;
-        return "homepage.xhtml";
+        return "homepage.xhtml?faces-redirect=true";
     }
 
+    public String deleteAccount() {
+        Controller.Instance().removeUser(gebruiker);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Account succesvol verwijderd!!", null));
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        Controller.Instance().Logout();
+        return "homepage.xhtml?faces-redirect=true";
+    }
 }

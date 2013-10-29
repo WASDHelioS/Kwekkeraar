@@ -7,19 +7,36 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"  xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:p="http://primefaces.org/ui"  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Gebruikers</title>
+        <h:outputStylesheet name="common-style.css"/>
     </h:head>
     <h:body>
-        <ul>
-            <ui:repeat value="#{gebruikerBean.gebruikers}" var="gebruiker">
-                <li>
-                    <h:link value="#{gebruiker.naam}" outcome="lijstMetKweksVanGebruiker">
-                        <f:param name="naam" value="#{gebruiker.naam}" />
-                    </h:link>
-                </li>
-            </ui:repeat>
-        </ul>
+
+        <ui:composition template="/resources/commonLayout.xhtml">
+
+            <ui:define name="content">
+
+                <ui:repeat value="#{gebruikerBean.gebruikers}" var="gebruiker">
+                    
+                    <p:panel id="berichtpanel" style="margin-bottom:10px;">  
+
+                        <h:panelGrid columns="3">
+                            <h:link value="#{gebruiker.naam}   " outcome="lijstMetKweksVanGebruiker">
+                                <f:param name="naam" value="#{gebruiker.naam}" />
+                            </h:link>
+                            <c:if test="#{loginBean.gebruiker.naam != null}">
+                                <h:form>
+                                    <h:commandLink value="Voeg toe aan favorieten" action="#{gebruikerBean.voegToeAanFavorieten(gebruiker)}" />
+                                </h:form>
+                            </c:if>
+                        </h:panelGrid>
+                    </p:panel>
+                </ui:repeat>
+
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

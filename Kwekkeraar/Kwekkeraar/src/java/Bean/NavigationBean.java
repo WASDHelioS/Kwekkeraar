@@ -43,4 +43,8 @@ public class NavigationBean {
     public String toLijstMetKweksVanGebruiker() {
         return "lijstMetKweksVanGebruiker.xhtml?faces-redirect=true";
     }
+    
+    public String toAccount() {
+        return "account.xhtml?faces-redirect=true";
+    }
 }

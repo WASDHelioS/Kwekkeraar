@@ -7,13 +7,40 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <title>Log in</title>
+        <title>Favorieten</title>
+        <h:outputStylesheet name="common-style.css"/>
     </h:head>
     <h:body>
-        <h:form>
-            <p:commandButton value="post bericht" update=""  action="#{navigationBean.toVoegKwekToe}" />
-        </h:form>
+
+        <ui:composition template="/resources/commonLayout.xhtml">
+
+            <ui:define name="content">
+                
+                <ui:repeat value="#{favorietenBean.favorieten}" var="gebruiker">
+                    
+                    <p:panel id="berichtpanel" style="margin-bottom:10px;">  
+
+                        <h:panelGrid columns="3">
+                            <h:link value="#{gebruiker.naam}   " outcome="lijstMetKweksVanGebruiker">
+                                <f:param name="naam" value="#{gebruiker.naam}" />
+                            </h:link>
+                        </h:panelGrid>
+                    </p:panel>
+                </ui:repeat>
+                <c:if test="#{favorietenBean.checkIfFavorietenIsEmpty()}">
+                        <p:panel id="berichtpanel" style="margin-bottom: 10px;">
+                            <h:panelGrid columns="3">
+                                <h:outputText id="bericht" value="Je hebt nog geen favorieten!" />
+                            </h:panelGrid>
+                        </p:panel>
+                </c:if>
+            </ui:define>
+
+        </ui:composition>
+
     </h:body>
 </html>

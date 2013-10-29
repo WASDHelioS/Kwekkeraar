@@ -10,9 +10,9 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui" >
     <h:head>
         <title>Registreer</title>
+        <h:outputStylesheet name="common-style.css"/>
     </h:head>
     <h:body>
-        <h:outputStylesheet name="default.css" />
         <h:form>
             <p:panel id="panel" header="Registreer" style="margin-bottom:10px;">  
                 <p:messages id="messages" />  
@@ -20,12 +20,14 @@ and open the template in the editor.
 
                     <p:outputLabel for="naam" value="Naam : " />  
                     <p:inputText id="naam" value="#{registerBean.gebruiker.naam}" 
-                                 required="true" validatorMessage="Naam mag niet leeg zijn!"/>
+                                 required="true">
+                        <f:validateLength maximum="45" />
+                        <f:validator validatorId="NoSpaceInNameValidator" />
+                    </p:inputText>
                     
                     <p:outputLabel for="wachtwoord" value="Wachtwoord : " />
-                    <h:inputSecret id="wachtwoord" value="#{registerBean.gebruiker.wachtwoord}"
-                                 required="true" validatorMessage="Wachtwoord mag niet leeg zijn!" />
-                    
+                    <h:inputSecret id="wachtwoord" value="#{registerBean.gebruiker.wachtwoord}" required="true" >
+                    </h:inputSecret>
                 </h:panelGrid>  
             </p:panel>  
 

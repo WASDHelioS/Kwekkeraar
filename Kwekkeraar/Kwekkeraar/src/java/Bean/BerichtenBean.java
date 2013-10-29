@@ -11,9 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -28,10 +25,23 @@ public class BerichtenBean {
     private ArrayList<Bericht> berichten;
 
     public BerichtenBean() {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
-        String value = request.getParameter("naam");
-        berichten = Controller.Instance().getAllBerichtenVanGebruiker(value);
+    }
+    
+    @PostConstruct
+    public void init() {
+        berichten = Controller.Instance().getAllBerichtenVanGebruiker(naam);
+        if(!berichten.isEmpty()) {
+            for(int i = 0; i < berichten.size(); i++) {
+                if(berichten.get(i).getInhoud().length() > 120) {
+                    berichten.get(i).setInhoud(new StringBuilder(berichten.get(i).getInhoud()).insert(120, "\n").toString());
+                }
+            }
+        }
+    }
+    
+    public boolean checkIfBerichtenIsEmpty() {
+        return berichten.isEmpty();
     }
 
     public ArrayList<Bericht> getBerichten() {

@@ -32,7 +32,7 @@ CREATE TABLE `bericht` (
   KEY `FK_POSTER_idx` (`poster`),
   KEY `FKF2F3D8B5C9AB9EDE` (`poster`),
   CONSTRAINT `FK_POSTER` FOREIGN KEY (`poster`) REFERENCES `gebruiker` (`naam`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,6 @@ CREATE TABLE `bericht` (
 
 LOCK TABLES `bericht` WRITE;
 /*!40000 ALTER TABLE `bericht` DISABLE KEYS */;
-INSERT INTO `bericht` VALUES (1,'qqqqaaaa','WASDHelioS'),(2,'aaaaqqqq','WASDHelioS'),(3,'qqqqwwwwqqqqwwww','WASDHelioS'),(4,'asdqweasdqwe','WASDHelioS');
 /*!40000 ALTER TABLE `bericht` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,6 +83,7 @@ CREATE TABLE `gebruiker` (
   `rol` enum('gebruiker','moderator') NOT NULL DEFAULT 'gebruiker',
   `accountsoort` enum('normaal','platinum') NOT NULL DEFAULT 'normaal',
   `salt` varchar(16) NOT NULL,
+  `recht` enum('ja','nee') NOT NULL DEFAULT 'ja',
   PRIMARY KEY (`naam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -94,7 +94,7 @@ CREATE TABLE `gebruiker` (
 
 LOCK TABLES `gebruiker` WRITE;
 /*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
-INSERT INTO `gebruiker` VALUES ('Nick','57d579c3b515791d8da9f8a118b9f8fc7a64d28ffaab1e33b86f4214cc73fd42e5a5ffdd6634ffedf6f8d62f375dcc3fe1a3b79e80847d075c21b0d12ddcacce','gebruiker','normaal','778236dc0f14c5f9'),('Remco','d539d5e77487cf9ace10c2435a99930544940ea92ea85e7db9cbfa48c4cb471b6446e6b321772e628f54c41538e015d5a65e1a1eb980ed17517541807cc87ef7','gebruiker','normaal','22a3ef6fcad3200b'),('WASDHelioS','d899e89e394a117a2cc18ea7ffe382f2b45b25ea4b63d679208d24558b9d378f0c6926087a708f99a12bdbf70ebc8867474a80ebfe5a7d7b1f2ea0df6ea3853a','gebruiker','normaal','1b5bd72d5c31c304');
+INSERT INTO `gebruiker` VALUES ('Remco','d539d5e77487cf9ace10c2435a99930544940ea92ea85e7db9cbfa48c4cb471b6446e6b321772e628f54c41538e015d5a65e1a1eb980ed17517541807cc87ef7','gebruiker','normaal','22a3ef6fcad3200b','ja'),('WASDHelioS','cb61fc401dbaf25148dd807cafade26a9d3af922fae298680aaef6f203d1d3bb20afcd8974dd99cf73e487f61d416b0b736d88c1126e70e1ee34d9789a776941','gebruiker','normaal','646b80267d4a6c07','ja');
 /*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-27 18:52:30
+-- Dump completed on 2013-10-29 22:42:11

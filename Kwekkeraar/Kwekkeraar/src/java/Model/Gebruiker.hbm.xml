@@ -29,17 +29,24 @@
         </type>
     </property>
     
-    <set name="berichten" cascade="save-update" lazy="false" table="bericht">
-        <key column ="poster"/>
+    <property name="recht">
+        <type name="org.hibernate.type.EnumType">
+            <param name="type">12</param>
+            <param name="enumClass">Model.Enums.Recht</param>
+        </type>
+    </property>
+    
+    <set name="berichten" cascade="delete" lazy="false" table="bericht" inverse="true">
+        <key column ="poster" not-null="true"/>
         <one-to-many class="Bericht"/>
     </set>
     
-    <set name="berichten_liked" table="bericht_liked">
+    <set name="berichten_liked" cascade="delete" table="bericht_liked">
         <key column="naam" not-null="true"/>
         <many-to-many class="Bericht" column="id"/>
     </set>
     
-    <set name="persoon_favoriet" table="gebruiker_favoriet">
+    <set name="persoon_favoriet" cascade="delete" table="gebruiker_favoriet">
         <key column="naam" not-null="true"/>
         <many-to-many class="Gebruiker" column="favoriet"/>
     </set>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition>
+
+            <h:form id="headerButtons">
+                <h:panelGrid columns="3">
+                    <p:commandButton value="Gebruikers" update="" action="#{navigationBean.toGebruikerLijst}" />
+                    <c:if test="#{loginBean.gebruiker.naam != null}">
+                        <p:commandButton value="Plaats bericht" update="" action="#{navigationBean.toVoegKwekToe}" />
+                        <p:commandButton value="Account" update="" action="#{navigationBean.toAccount}" />
+                        <p:commandButton value="Log uit" update=""  action="#{loginBean.logout}" />
+                    </c:if>
+                    <c:if test="#{loginBean.gebruiker.naam == null}">
+                        
+                        <p:commandButton value="Registreer" update="" action="#{navigationBean.toRegister}" />
+                        <p:commandButton value="Log in" update="" action="#{navigationBean.toLogin}"/>
+                    </c:if>
+                </h:panelGrid>
+            </h:form>
+
+        </ui:composition>
+    </h:body>
+</html>

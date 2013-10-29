@@ -7,18 +7,40 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"  xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:p="http://primefaces.org/ui"  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>#{berichtenBean.naam}</title>
+        <h:outputStylesheet name="common-style.css"/>
     </h:head>
     <h:body>
-        <ul>
-            <ui:repeat value="#{berichtenBean.berichten}" var="bericht">
-                <h:panelGrid columns="2">
-                    
-                    <h:outputText value="#{bericht.inhoud}"/>
-                </h:panelGrid>
-            </ui:repeat>
-        </ul>
+        <ui:composition template="/resources/commonLayout.xhtml">
+            <ui:define name="content">
+                <ul>
+                    <h:outputText id="naam" value="Bericten van #{berichtenBean.naam} : " />
+                    <ui:repeat value="#{berichtenBean.berichten}" var="bericht">
+                        <p:panel id="berichtpanel" style="margin-bottom:10px;">  
+                            <h:panelGrid columns="3">
+                                <h:outputText id="bericht" value="#{bericht.inhoud}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </ui:repeat>
+                    <c:if test="#{berichtenBean.checkIfBerichtenIsEmpty() and gebruikerBean.gebruikerExists(berichtenBean.naam)}">
+                        <p:panel id="berichtpanel" style="margin-bottom: 10px;">
+                            <h:panelGrid columns="3">
+                                <h:outputText id="bericht" value="#{berichtenBean.naam} heeft nog geen berichten geplaatst!" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </c:if>
+                    <c:if test="#{!gebruikerBean.gebruikerExists(berichtenBean.naam)}">
+                        <p:panel>
+                            <h:panelGrid columns="3"> 
+                                <h:outputText id="bericht" value="#{berichtenBean.naam} bestaat niet meer!" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </c:if>
+                </ul>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
