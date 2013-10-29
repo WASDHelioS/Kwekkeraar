@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>Registreer</title>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet name="default.css" />
+        <h:form>
+            <p:panel id="panel" header="Registreer" style="margin-bottom:10px;">  
+                <p:messages id="messages" />  
+                <h:panelGrid columns="2">  
+
+                    <p:outputLabel for="naam" value="Naam : " />  
+                    <p:inputText id="naam" value="#{registerBean.gebruiker.naam}" 
+                                 required="true" validatorMessage="Naam mag niet leeg zijn!"/>
+                    
+                    <p:outputLabel for="wachtwoord" value="Wachtwoord : " />
+                    <h:inputSecret id="wachtwoord" value="#{registerBean.gebruiker.wachtwoord}"
+                                 required="true" validatorMessage="Wachtwoord mag niet leeg zijn!" />
+                    
+                </h:panelGrid>  
+            </p:panel>  
+
+            <p:commandButton value="Registreer" update="panel" action="#{registerBean.register}"/>
+        </h:form>
+    </h:body>
+</html>

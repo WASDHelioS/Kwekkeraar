@@ -157,4 +157,18 @@ public class Controller extends Observable {
         }
         return gebr;
     }
+    
+    public ArrayList<Bericht> getAllBerichtenVanGebruiker(String gebruiker) {
+        initSession();
+        List result = session.createSQLQuery("select id, inhoud from bericht where poster ='" + gebruiker+"'").list();
+        ArrayList<Bericht> ber = new ArrayList<Bericht>();
+        for(int i = 0; i < result.size(); i++) {
+            Bericht b = new Bericht();
+            Object[] o = (Object[]) result.get(i);
+            b.setId(Integer.getInteger(o[0].toString()));
+            b.setInhoud(o[1].toString());
+            ber.add(b);
+        }
+        return ber;
+    }
 }
