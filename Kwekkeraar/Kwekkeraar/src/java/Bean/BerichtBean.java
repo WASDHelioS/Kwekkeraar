@@ -6,6 +6,7 @@
 package Bean;
 
 import Model.Bericht;
+import Model.Enums.Accountsoort;
 import Model.Enums.Recht;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -37,12 +38,21 @@ public class BerichtBean {
     public String addBericht() {
         if (Controller.Controller.Instance().getLoggedIn().getRecht().equals(Recht.ja)) {
             Controller.Controller.Instance().addBericht(bericht.getInhoud(), Controller.Controller.Instance().getLoggedIn());
-            FacesMessage msg = new FacesMessage("Uw bericht is geplaatst!");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bericht is geplaatst!", null));
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+
+            if (Controller.Controller.Instance().afterPostCheckIfGebruikerHas200Posts(Controller.Controller.Instance().getLoggedIn())) {
+                if (Controller.Controller.Instance().getLoggedIn().getAccountsoort().equals(Accountsoort.normaal)) {
+                    Controller.Controller.Instance().getLoggedIn().setAccountsoort(Accountsoort.platinum);
+                    Controller.Controller.Instance().editUser(Controller.Controller.Instance().getLoggedIn());
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                            "U heeft meer dan 200 posts en Uw account is opgekrikt naar een platinum account. U kunt nu berichten liken.", null));
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                }
+            }
+
             return "homepage.xhtml?faces-redirect=true";
-        }
-        else {
+        } else {
             FacesMessage msg = new FacesMessage("U heeft het recht niet om een bericht te plaatsen!");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);

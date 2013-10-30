@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="Model">
+  <class catalog="kwekkeraar" name="Gebruiker" table="gebruiker">
+    <id name="naam" type="java.lang.String">
+        <column name="naam"/>
+        <generator class="assigned"/>
+    </id>
+    
+    <property name="wachtwoord" type="string">
+        <column length="128" name="wachtwoord" not-null="true" />
+    </property>
+    
+    <property name="salt" type="string">
+        <column length="16" name="salt" not-null="true" />
+    </property>
+    
+    <property name="rol">
+        <type name="org.hibernate.type.EnumType">
+        <param name="type">12</param>
+        <param name="enumClass">Model.Enums.Rol</param>
+        </type>
+    </property>
+    
+    <property name="accountsoort">
+        <type name="org.hibernate.type.EnumType">
+        <param name="type">12</param>
+        <param name="enumClass">Model.Enums.Accountsoort</param>
+        </type>
+    </property>
+    
+    <property name="recht">
+        <type name="org.hibernate.type.EnumType">
+            <param name="type">12</param>
+            <param name="enumClass">Model.Enums.Recht</param>
+        </type>
+    </property>
+    
+    <set name="berichten" cascade="delete" lazy="false" table="bericht" inverse="true">
+        <key column ="poster" not-null="true"/>
+        <one-to-many class="Bericht"/>
+    </set>
+    
+    <set name="berichten_liked" cascade="delete" table="bericht_liked">
+        <key column="naam" not-null="true"/>
+        <many-to-many class="Bericht" column="id"/>
+    </set>
+    
+    <set name="persoon_favoriet" cascade="delete" table="gebruiker_favoriet">
+        <key column="naam" not-null="true"/>
+        <many-to-many class="Gebruiker" column="favoriet"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -6,11 +6,13 @@ package Bean;
 
 import Controller.Controller;
 import Model.Bericht;
+import Model.Gebruiker;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -38,6 +40,13 @@ public class BerichtenBean {
                 }
             }
         }
+    }
+    
+    public boolean heeftGebruikerAlGeliked(Gebruiker gebruiker, int id) {
+        if(gebruiker.getBerichten_liked().contains(id)) {
+            return true;
+        }
+        return false;
     }
     
     public boolean checkIfBerichtenIsEmpty() {

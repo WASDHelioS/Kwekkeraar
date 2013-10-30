@@ -6,6 +6,7 @@
 package Bean;
 
 import Controller.Controller;
+import Model.Enums.Rol;
 import Model.Gebruiker;
 import java.util.Iterator;
 import java.util.Set;
@@ -83,5 +84,14 @@ public class LoginBean {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         Controller.Instance().Logout();
         return "homepage.xhtml?faces-redirect=true";
+    }
+    
+    public boolean checkRolModerator() {
+        if(gebruiker.getRol() == Rol.gebruiker) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }
